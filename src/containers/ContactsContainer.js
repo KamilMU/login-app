@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ContactList from '../components/ContactList'
+import Contacts from '../components/Contacts'
 import { changeInput, addContact, deleteContact } from '../actions/SessionActions'
 
-class ContactListContainer extends React.Component {
+class ContactsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state={
@@ -14,11 +14,7 @@ class ContactListContainer extends React.Component {
       filteredContacts: []
     }
   }
-  componentDidMount() {
-    this.setState({
-      filteredContacts: this.props.contacts
-    })
-  }
+
   addContact = (e) => {
     e.preventDefault();
     if(this.state.name) {
@@ -36,19 +32,19 @@ class ContactListContainer extends React.Component {
     })
   }
 
-  searchContactByInput = inputValue => {
-    console.log(inputValue.length)
-    this.setState({
+  searchContactByInput = async inputValue => {
+    await this.setState({
       filteredContacts: this.props.contacts.filter(contact => {if (inputValue  !== -1) { return contact.name.toString().toLowerCase().includes(inputValue.toLowerCase())}})
     })
-    console.log(this.props.contacts, this.state.filteredContacts, this.state.searchName)
+    console.log(this.state.filteredContacts)
   }
 
   handleInputSearch = inputSearch => {
+    console.log(inputSearch)
     this.setState({ searchName: inputSearch})
   }
   render() {
-    return <ContactList 
+    return <Contacts 
               name={this.state.name} 
               secondName={this.state.secondName} 
               searchName={this.state.searchName} 
@@ -70,7 +66,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => {
-  console.log(changeInput, addContact)
   return {
     changeInput: (e) => {
       console.log('changed', e.target.value)
@@ -82,4 +77,4 @@ const mapDispatchToProps = dispatch => {
     // searchContact: (message) => dispatch(searchContact(message))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(ContactListContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(ContactsContainer)

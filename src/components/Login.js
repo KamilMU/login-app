@@ -45,9 +45,13 @@ class Login extends React.Component {
 
     return (
       <div>
-        {errorMsg && <p>{errorMsg}</p>}
+        {errorMsg && <p style={{position: 'absolute'}}>{errorMsg}</p>}
         <div className="login_form">
-            <form className="login" onSubmit={this.handleSubmit}>
+          <div style={{display: 'flex', flexDirection: 'column'}}>
+            <b>Логин: admin</b>
+            <b>Пароль: 12345</b>
+          </div>
+          <form className="login" onSubmit={this.handleSubmit}>
             <div>
               <input
               data-field-name='username'

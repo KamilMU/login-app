@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const LinkBtn = ({ to, label }) => {
   return (
     <Link to={to}>
-      <Button variant="raised" color="primary">
+      <Button variant="raised" color="primary" className="tab">
         <span>{label}</span>
       </Button>
     </Link>

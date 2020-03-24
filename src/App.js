@@ -2,7 +2,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import LoginContainer from './containers/LoginContainer'
 import LinkBtn from './components/LinkBtn'
-import ContactListContainer from './containers/ContactListContainer'
+import ContactsContainer from './containers/ContactsContainer'
 import './App.css'
 
 
@@ -18,7 +18,7 @@ const App = () => (
       <hr />
       <div className="content">
         <Switch>
-          <Route path="/contacts" component={ContactListContainer} />
+          <Route path="/contacts" component={ContactsContainer} />
           <Route path="/login" component={LoginContainer} />
         </Switch>
       </div>
