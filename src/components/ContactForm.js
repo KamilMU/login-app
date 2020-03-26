@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Input } from 'antd'
 
-const ContactForm = ({ name, searchName, secondName, addContact, handleChange, handleInputSearch, searchContactByInput, handleKeyPress }) => {
+const ContactForm = ({ name, searchName, secondName, addContact, handleChangeName, handleChangeSecondName, handleChangeSearchName }) => {
     return (
         <>
             <form onSubmit={addContact} className="contact_form">
@@ -11,8 +11,7 @@ const ContactForm = ({ name, searchName, secondName, addContact, handleChange, h
                     className="contact_search"
                     type="text"
                     value={searchName}
-                    onChange={e => {return handleInputSearch(e.target.value), searchContactByInput(e.target.value)}}
-                    onKeyPress={handleKeyPress}
+                    onChange={e => handleChangeSearchName(e.target.value)}
                 />
                 <Input
                     placeholder="Введите имя контакта..."
@@ -20,7 +19,7 @@ const ContactForm = ({ name, searchName, secondName, addContact, handleChange, h
                     className="contact_input"
                     type="text" 
                     value={name}
-                    onChange={handleChange} 
+                    onChange={e => handleChangeName(e.target.value)} 
                 />
                 <Input
                     placeholder="Введите фамилию контакта..."
@@ -28,7 +27,7 @@ const ContactForm = ({ name, searchName, secondName, addContact, handleChange, h
                     className="contact_input"
                     type="text"
                     value={secondName}
-                    onChange={handleChange}
+                    onChange={e => handleChangeSecondName(e.target.value)}
                 />
                 <Button className="contact_button" onClick={addContact}>Add</Button>
             </form>

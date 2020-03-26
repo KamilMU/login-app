@@ -1,80 +1,71 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Contacts from '../components/Contacts'
-import { changeInput, addContact, deleteContact } from '../actions/SessionActions'
+import { addContact, deleteContact } from '../actions/SessionActions'
 
 class ContactsContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state={
-      name: '',
-      secondName:'',
-      email:'',
-      searchName: '',
-      filteredContacts: []
-    }
-  }
 
   addContact = (e) => {
     e.preventDefault();
-    if(this.state.name) {
-      this.props.addContact(this.state.name, this.state.secondName);
+    if(this.props.name) {
+      this.props.addContact(this.props.name, this.props.secondName);
     }
-    this.setState({
-      name: '',
-      secondName: ''
-    })
   } 
 
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+  handleChangeName = text => {
+    this.props.changeInputName(text)
   }
 
-  searchContactByInput = async inputValue => {
-    await this.setState({
-      filteredContacts: this.props.contacts.filter(contact => {if (inputValue  !== -1) { return contact.name.toString().toLowerCase().includes(inputValue.toLowerCase())}})
-    })
-    console.log(this.state.filteredContacts)
+  handleChangeSecondName = text => {
+    this.props.changeInputSecondName(text)
   }
 
-  handleInputSearch = inputSearch => {
+  handleChangeSearchName = inputSearch => {
     console.log(inputSearch)
-    this.setState({ searchName: inputSearch})
+    this.props.changeInputSearchName(inputSearch)
   }
+
   render() {
     return <Contacts 
-              name={this.state.name} 
-              secondName={this.state.secondName} 
-              searchName={this.state.searchName} 
-              filteredContacts={this.state.filteredContacts}
+              name={this.props.name} 
+              secondName={this.props.secondName} 
+              searchName={this.props.searchName} 
+              filteredContacts={this.props.filteredContacts}
               contacts={this.props.contacts}
               addContact={this.addContact}
-              handleChange={this.handleChange}
               deleteContact={this.props.deleteContact}
-              handleSearch={this.handleSearch}
-              searchContactByInput={this.searchContactByInput}
-              handleInputSearch={this.handleInputSearch}
+              handleChangeName={this.handleChangeName}
+              handleChangeSecondName={this.handleChangeSecondName}
+              handleChangeSearchName={this.handleChangeSearchName}
             />
   }
 }
 
 const mapStateToProps = state => ({
-  message: state.contacts.message,
-  contacts: state.contacts.contacts
+  name: state.contacts.name,
+  secondName: state.contacts.secondName,
+  searchName: state.contacts.searchName,
+  contacts: state.contacts.contacts,
+  filteredContacts: state.contacts.contacts.filter(contact => contact.name.toString().startsWith(state.contacts.searchName))
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeInput: (e) => {
-      console.log('changed', e.target.value)
-      const action = {type: 'CHANGE_INPUT_TEXT', message: e.target.value};
+    changeInputName: (text) => {
+      console.log('changed', text)
+      const action = { type: 'CHANGE_INPUT_NAME', name: text };
+      dispatch(action)
+    },
+    changeInputSecondName: (text) => {
+      const action = { type: 'CHANGE_INPUT_SECONDNAME', secondName: text };
+      dispatch(action)
+    },
+    changeInputSearchName: (text) => {
+      const action = { type: 'CHANGE_INPUT_SEARCHNAME', searchName: text };
       dispatch(action)
     },
     addContact: (name, secondName) => dispatch(addContact(name, secondName)),
-    deleteContact: (id) => dispatch(deleteContact(id)),
-    // searchContact: (message) => dispatch(searchContact(message))
+    deleteContact: (id) => dispatch(deleteContact(id))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ContactsContainer)

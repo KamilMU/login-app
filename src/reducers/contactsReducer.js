@@ -1,9 +1,13 @@
-import { ADD_CONTACT, DELETE_CONTACT, CHANGE_INPUT_TEXT, SEARCH_CONTACT } from '../actions/SessionActions'
+import { ADD_CONTACT, DELETE_CONTACT, CHANGE_INPUT_NAME, CHANGE_INPUT_SECONDNAME, CHANGE_INPUT_SEARCHNAME } from '../actions/SessionActions'
+
 const initialState ={
     contacts: [],
-    filteredNews: [],
-    message: ''
+    filteredContacts: [],
+    name: '',
+    secondName: '',
+    searchName: ''
 }
+
 export default (state = initialState , action) => {
     switch (action.type) {
       case ADD_CONTACT:
@@ -16,21 +20,17 @@ export default (state = initialState , action) => {
             secondName: action.secondName
           }]
         }
-        case CHANGE_INPUT_TEXT:
-            return Object.assign({}, state, {message: action.message})
+        case CHANGE_INPUT_NAME:
+            return Object.assign({}, state, {name: action.name})
+        case CHANGE_INPUT_SECONDNAME:
+            return Object.assign({}, state, {secondName: action.secondName})
+        case CHANGE_INPUT_SEARCHNAME:
+            return Object.assign({}, state, {searchName: action.searchName})
         case DELETE_CONTACT: {
           return {
             ...state,
             contacts: state.contacts.filter(news => news.id !== action.id),
           };
-        }
-        case SEARCH_CONTACT: {
-          const { name } = action;
-          return {
-            ...state,
-            name,
-            contacts: state.contacts.filter(value => {if (!value || typeof value === "string") { return value.search(name)}})
-          }
         }
           default:
             return state 

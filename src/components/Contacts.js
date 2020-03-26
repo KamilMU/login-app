@@ -3,7 +3,7 @@ import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 
 
-const Contacts = ({ name, secondName, searchName, contacts, filteredContacts, addContact, deleteContact, searchContactByInput, handleChange, handleInputSearch }) => {
+const Contacts = ({ name, secondName, searchName, contacts, filteredContacts, addContact, deleteContact, searchContactByInput, handleChangeName, handleChangeSecondName, handleChangeSearchName }) => {
   
   return (
     <div className="contact-list">
@@ -14,8 +14,9 @@ const Contacts = ({ name, secondName, searchName, contacts, filteredContacts, ad
         searchName={searchName}
         addContact={addContact}
         searchContactByInput={searchContactByInput}
-        handleChange={handleChange}
-        handleInputSearch={handleInputSearch}
+        handleChangeName={handleChangeName}
+        handleChangeSecondName={handleChangeSecondName}
+        handleChangeSearchName={handleChangeSearchName}
       />
       <ContactList
         searchName={searchName}
